@@ -42,7 +42,7 @@ using namespace std;
          cin.clear();
          cin.ignore(numeric_limits<streamsize>::max(), '\n');
    }
-   //Until here because Im retarded :skyrim_skeleton:
+   //Until here:skyrim_skeleton:
 
    switch (inputChoice) {
       case 1:  result = input / 1000; unit = " km"; break;
