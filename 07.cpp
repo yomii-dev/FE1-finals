@@ -6,6 +6,7 @@ class Temperature {
   public:
     void convertTemp() {
         char repeat;
+        cout << "=== Temperature Conversion Calculator :D ===\n";
         while (true) {
             double tempValue = _takeValue();
             char initialUnit = _takeInitialUnit();
