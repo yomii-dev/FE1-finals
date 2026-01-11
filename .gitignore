@@ -1,0 +1,9 @@
+# Untrack executables
+0*
+10*
+app*
+
+# Make sure 01-09.cpp still gets tracked lmao
+!0*.cpp
+!10.cpp
+!app.cpp
