@@ -766,8 +766,8 @@ class MotionCalculator {
             cin >> time;
             cout << "Enter time unit (s, min, h): ";
             cin >> timeUnit;
-            double distance = calculateDistance(speed, time, distUnit,
-                                                     speedUnit, timeUnit);
+            double distance =
+                calculateDistance(speed, time, distUnit, speedUnit, timeUnit);
             cout << "Distance: " << distance << " " << distUnit << endl;
         } else if (choice == 's' || choice == 'S') {
             double distance, time;
@@ -780,8 +780,7 @@ class MotionCalculator {
             cin >> time;
             cout << "Enter time unit (s, min, h): ";
             cin >> timeUnit;
-            double speed =
-                calculateSpeed(distance, time, distUnit, timeUnit);
+            double speed = calculateSpeed(distance, time, distUnit, timeUnit);
             cout << "Speed: " << speed << " m/s"
                  << endl; // output is m/s by default
         } else if (choice == 't' || choice == 'T') {
@@ -797,8 +796,8 @@ class MotionCalculator {
             cin >> speedUnit;
             cout << "Enter time unit (s, min, h): ";
             cin >> timeUnit;
-            double time = calculateTime(distance, speed, distUnit,
-                                             speedUnit, timeUnit);
+            double time =
+                calculateTime(distance, speed, distUnit, speedUnit, timeUnit);
             cout << "Time: " << time << " " << timeUnit << endl;
         } else {
             cout << "Invalid choice." << endl;
@@ -882,6 +881,33 @@ class MotionCalculator {
     }
 };
 
+class FreeFall {
+  public:
+    void run() {
+        cout << "Enter time (in seconds): ";
+        cin >> time;
+
+        showResults();
+    }
+
+  private:
+    double time;          // this is in seconds
+    const double g = 9.8; // m/s²
+
+    // calculating velocity
+    double velocity() { return g * time; }
+
+    // calculating the distance during fall
+    double distance() { return 0.5 * g * time * time; }
+
+    // display
+    void showResults() {
+        cout << "After " << time << " seconds:\n";
+        cout << "Velocity = " << velocity() << " m/s\n";
+        cout << "Distance fallen = " << distance() << " meters\n";
+    }
+};
+
 class Menu {
   private:
     /* Class Initializations dito */
@@ -894,6 +920,7 @@ class Menu {
     Temperature seben;
     PressureVolumeCalculator eyt;
     MotionCalculator nayn;
+    FreeFall ten;
     bool running = true;
     int choice;
 
@@ -955,7 +982,7 @@ class Menu {
                 break;
             case 10:
                 // Call ung calc nung choice
-
+                ten.run();
                 break;
             case 11:
                 return;

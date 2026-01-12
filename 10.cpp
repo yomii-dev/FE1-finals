@@ -1,25 +1,18 @@
 #include <iostream>
 using namespace std;
 
-class FreeFall {
-private:
+class FreeFall { private:
     double time;          // this is in seconds
     const double g = 9.8; // m/s²
 
-public:
-    FreeFall(double t) {
-        time = t;
-    }
+  public:
+    FreeFall(double t) { time = t; }
 
     // calculating velocity
-    double velocity() {
-        return g * time;
-    }
+    double velocity() { return g * time; }
 
     // calculating the distance during fall
-    double distance() {
-        return 0.5 * g * time * time;
-    }
+    double distance() { return 0.5 * g * time * time; }
 
     // display
     void showResults() {
