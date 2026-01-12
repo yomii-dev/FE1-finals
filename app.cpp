@@ -1,9 +1,136 @@
 #include <iostream>
+#include <limits>
+#include <string>
 using namespace std;
+
+class UnitConversion {
+  private:
+    int inputChoice;
+    double input, result;
+    string unit;
+    char repeat;
+
+  public:
+    void run() {
+        while (true) {
+            cout << "\n=== UNIT CONVERSION CALCULATOR ===\n";
+            cout << "1. Meters to Kilometers\n";
+            cout << "2. Meters to Miles\n";
+            cout << "3. Kilometers to Miles\n";
+            cout << "4. Kilometers to Meters\n";
+            cout << "5. Miles to Kilometers\n";
+            cout << "6. Miles to Meters\n";
+            cout << "7. Seconds to Minutes\n";
+            cout << "8. Seconds to Hours\n";
+            cout << "9. Seconds to Days\n";
+            cout << "10. Minutes to Seconds\n";
+            cout << "11. Hours to Seconds\n";
+            cout << "12. Days to Seconds\n";
+            cout << "13. m/s to km/h\n";
+            cout << "14. m/s^2 to km/h^2\n";
+            cout << "Choose an option (1–14): ";
+
+            cin >> inputChoice;
+
+            // Not gonna lie, I asked ChatGPT for help with this part
+            if (cin.fail() || inputChoice < 1 || inputChoice > 14) {
+                cout << "\nTHIS OPTION IS INVALID, TRY AGAIN!\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+
+            cout << "Enter the Value: ";
+            while (!(cin >> input)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            // Until here :skyrim_skeleton:
+
+            switch (inputChoice) {
+            case 1:
+                result = input / 1000;
+                unit = " km";
+                break;
+            case 2:
+                result = input / 1609.34;
+                unit = " mi";
+                break;
+            case 3:
+                result = input * 0.621371;
+                unit = " mi";
+                break;
+            case 4:
+                result = input * 1000;
+                unit = " m";
+                break;
+            case 5:
+                result = input * 1.60934;
+                unit = " km";
+                break;
+            case 6:
+                result = input * 1609.34;
+                unit = " m";
+                break;
+            case 7:
+                result = input / 60;
+                unit = " min";
+                break;
+            case 8:
+                result = input / 3600;
+                unit = " h";
+                break;
+            case 9:
+                result = input / 86400;
+                unit = " days";
+                break;
+            case 10:
+                result = input * 60;
+                unit = " s";
+                break;
+            case 11:
+                result = input * 3600;
+                unit = " s";
+                break;
+            case 12:
+                result = input * 86400;
+                unit = " s";
+                break;
+            case 13:
+                result = input * 3.6;
+                unit = " km/h";
+                break;
+            case 14:
+                result = input * 12960;
+                unit = " km/h^2";
+                break;
+            }
+
+            cout << "Result: " << result << unit << '\n';
+
+            cout << "Do you want to convert again?";
+            while (!(cin >> repeat)) {
+                cout << "Enter a valid input.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            if (repeat == 'y' || repeat == 'Y') {
+                continue;
+            } else {
+                return;
+            }
+        }
+    }
+};
 
 class Menu {
   private:
     /* Class Initializations dito */
+    UnitConversion wan;
     bool running = true;
     int choice;
 
@@ -20,15 +147,16 @@ class Menu {
             cout << "7. Temperature Conversion\n";
             cout << "8. Pressure and Volume Calculations\n";
             cout << "9. Find the Time\n";
-            cout << "10. Freefall\n\n";
+            cout << "10. Freefall\n";
+            cout << "11. Quit\n\n";
 
-            cout << "Choose the number of the calculator to begin(q to quit): ";
+            cout << "Choose the number of the calculator to begin: ";
             cin >> choice;
 
             switch (choice) {
             case 1:
                 // Call ung calc nung choice
-
+                wan.run();
                 break;
             case 2:
                 // Call ung calc nung choice
@@ -66,7 +194,11 @@ class Menu {
                 // Call ung calc nung choice
 
                 break;
+            case 11:
+                return;
             default:
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Invalid Input.\n\n";
                 break;
             }
@@ -75,8 +207,6 @@ class Menu {
 };
 
 int main() {
-    cout << "lmao";
-
     Menu app;
     app.showMenu();
 
