@@ -127,10 +127,97 @@ class UnitConversion {
     }
 };
 
+class OhmsLaw {
+  private:
+    double getVoltage(double i, double r) { return i * r; }
+
+    double getCurrent(double v, double r) { return v / r; }
+
+    double getResistance(double v, double i) { return v / i; }
+
+  public:
+    void run() {
+        double v = 0; // Voltage
+        double i = 0; // Current
+        double r = 0; // Resistance
+        int choice;
+
+        cout << "Welcome to Ohm's Law Calculator!";
+        cout << "\n\nPick an Operation:";
+        cout << "\n1 Voltage";
+        cout << "\n2 Current";
+        cout << "\n3 Resistance";
+        cout << "\nEnter Operation Number: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter the value of Current: ";
+            while (!(cin >> i)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << "Enter the value of Resistance: ";
+            while (!(cin >> r)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            cout << i << " * " << r << " = " << getVoltage(i, r) << "V";
+            break;
+
+        case 2:
+            cout << "Enter the value of Voltage: ";
+            while (!(cin >> v)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << "Enter the value of Resistance: ";
+            while (!(cin >> r)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << v << " / " << r << " = " << getCurrent(v, r) << "A";
+
+            break;
+
+        case 3:
+            cout << "Enter the value of Voltage: ";
+            while (!(cin >> v)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << "Enter the value of Current: ";
+            while (!(cin >> i)) {
+                cout << "Invalid input. Please enter a number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << v << " / " << i << " = " << getResistance(v, i) << "Ω";
+
+            break;
+
+        default:
+            cout << "Invalid Operation";
+        }
+        cout << '\n';
+    }
+};
+
 class Menu {
   private:
     /* Class Initializations dito */
     UnitConversion wan;
+    OhmsLaw too;
     bool running = true;
     int choice;
 
@@ -160,7 +247,7 @@ class Menu {
                 break;
             case 2:
                 // Call ung calc nung choice
-
+                too.run();
                 break;
             case 3:
                 // Call ung calc nung choice
