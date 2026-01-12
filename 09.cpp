@@ -36,25 +36,24 @@ private:
     }
 
 public:
-    // Calculate distance in base units, then convert back
+    // calculating distance in base units, then convert back
     double calculateDistance(double speed, double time, const string& distUnit, const string& speedUnit, const string& timeUnit) {
-        // Assume speed is in distUnit/timeUnit; convert to m/s for calculation
         double speedBase = toMeters(speed, speedUnit.substr(0, speedUnit.find('/'))) / toSeconds(1, speedUnit.substr(speedUnit.find('/') + 1));
         double timeBase = toSeconds(time, timeUnit);
         double distanceBase = speedBase * timeBase;
         return fromMeters(distanceBase, distUnit);
     }
 
-    // Calculate speed in base units, then convert back
+    // calculating speed in base units, then convert back
     double calculateSpeed(double distance, double time, const string& distUnit, const string& timeUnit) {
         double distBase = toMeters(distance, distUnit);
         double timeBase = toSeconds(time, timeUnit);
         double speedBase = distBase / timeBase;  // m/s
-        // Return in a standard unit like m/s or km/h; here, we'll return m/s for simplicity
+        // return in a standard unit like m/s or km/h, return to m/s for simplicity
         return speedBase;
     }
 
-    // Calculate time in base units, then convert back
+    // calculating time in base units, then convert back
     double calculateTime(double distance, double speed, const string& distUnit, const string& speedUnit, const string& timeUnit) {
         double distBase = toMeters(distance, distUnit);
         double speedBase = toMeters(speed, speedUnit.substr(0, speedUnit.find('/'))) / toSeconds(1, speedUnit.substr(speedUnit.find('/') + 1));
