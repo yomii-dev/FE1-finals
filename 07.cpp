@@ -1,5 +1,6 @@
 #include <cctype>
 #include <iostream>
+#include <limits>
 using namespace std;
 
 class Temperature {
@@ -16,7 +17,7 @@ class Temperature {
 
             cout << tempValue << initialUnit << " -> " << answer
                  << convertedUnit;
-            
+
             cout << "\nDo you wish convert more? [y/n] ";
             cin >> repeat;
 
@@ -29,11 +30,20 @@ class Temperature {
     /* Underscore naming conversion para di accidentally used */
   private:
     double _takeValue() {
-        double temp;
-        cout << "1. Input the VALUE of the temperature: ";
-        cin >> temp;
+        while (true) {
+            double temp;
 
-        return temp;
+            cout << "1. Input the VALUE of the temperature: ";
+
+            if (!(cin >> temp)) {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Please enter only real numbers\n";
+                continue;
+            }
+
+            return temp;
+        }
     }
 
     char _takeInitialUnit() {
@@ -41,7 +51,15 @@ class Temperature {
 
         while (true) {
             cout << "2. Pick the unit that your temperature IS IN [F/C/K]: ";
-            cin >> unit;
+            if (!(cin >> unit)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Please enter a valid input...\n";
+                continue;
+            }
+
+            /* This basically leaves only the first char */
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             if (!_isValidUnit(unit)) {
                 cout << "Please input a valid unit [F/C/K].\n";
@@ -58,7 +76,15 @@ class Temperature {
 
         while (true) {
             cout << "3. Pick the unit that you want to convert TO [F/C/K]: ";
-            cin >> unit;
+            if (!(cin >> unit)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Please enter a valid input...\n";
+                continue;
+            }
+
+            /* This basically leaves only the first char */
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             if (!_isValidUnit(unit)) {
                 cout << "Please input a valid unit [F/C/K].\n";

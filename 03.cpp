@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 using namespace std;
 
 class EnergyCalculations {
@@ -15,8 +16,8 @@ class EnergyCalculations {
 
         while (true) {
             cout << "Which are you looking for?\n";
-            cout << "1. Potential Energy(PE)\n2. Kinetic Energy\n";
-            cout << "Choice: [1-2] ";
+            cout << "1. Potential Energy(PE)\n2. Kinetic Energy(KE)\n3. Quit\n";
+            cout << "Choice: [1-3] ";
             cin >> choice;
 
             switch (choice) {
@@ -29,13 +30,19 @@ class EnergyCalculations {
             case 2:
                 m = getInput('m');
                 v = getInput('v');
-                answer = (m * h) / 2;
+                answer = (m * v * v) / 2;
                 cout << "KE = ";
                 break;
-            default:
-                cout << "I guess you quit the program byee";
+            case 3:
                 return;
+            default:
+                cout << "\nInvalid input\n\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
             }
+
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             
             cout << answer << "\n";
             return;
@@ -45,21 +52,29 @@ class EnergyCalculations {
     double getInput(char value) {
         double input;
 
-        if (value == 'm') {
-            cout << "Enter the mass of the object in kilograms(kg): ";
-            cin >> input;
-        } else if (value == 'v') {
-            cout << "Enter the velocity of the object in meters/second(m/s): ";
-            cin >> input;
-        } else if (value == 'h') {
-            cout << "Enter the object's height above a reference point in "
-                    "meters(m): ";
-            cin >> input;
-        } else {
-            cout << "uh what";
+        while (true) {
+            if (value == 'm') {
+                cout << "Enter the mass of the object in kilograms(kg): ";
+            } else if (value == 'v') {
+                cout << "Enter the velocity of the object in "
+                        "meters/second(m/s): ";
+            } else if (value == 'h') {
+                cout << "Enter the object's height above a reference point in "
+                        "meters(m): ";
+            } else {
+                cout << "uh what";
+            }
+            
+            if (!(cin >> input)) {
+                cout << "Please enter a number\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+            
+            return input;
         }
 
-        return input;
     }
 };
 
