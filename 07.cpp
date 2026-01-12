@@ -1,53 +1,79 @@
+#include <cctype>
 #include <iostream>
 using namespace std;
 
 class Temperature {
   public:
     void convertTemp() {
-        double tempNum = _takeTemp();
+        char repeat;
+        cout << "=== Temperature Conversion Calculator :D ===\n";
+        while (true) {
+            double tempValue = _takeValue();
+            char initialUnit = _takeInitialUnit();
+            char convertedUnit = _takeConvertedUnit();
 
-        // May Change
-        char tempUnit = _chooseUnit(0);
-        char convertTempTo = _chooseUnit(1);
+            double answer = _solve(tempValue, initialUnit, convertedUnit);
 
-        // TODO:
-        double answer = fahrenheitToCelsius(tempNum);
+            cout << tempValue << initialUnit << " -> " << answer
+                 << convertedUnit;
+            
+            cout << "\nDo you wish convert more? [y/n] ";
+            cin >> repeat;
 
-        cout << tempNum << tempUnit << " -> " << answer << convertTempTo;
+            if (repeat == 'n' || repeat == 'N') {
+                return;
+            }
+        }
     }
 
-    double _takeTemp() {
+    /* Underscore naming conversion para di accidentally used */
+  private:
+    double _takeValue() {
         double temp;
-        cout << "1. What temperature do you want to convert? ";
+        cout << "1. Input the VALUE of the temperature: ";
         cin >> temp;
 
         return temp;
     }
 
-    char _chooseUnit(int questionIndex) {
+    char _takeInitialUnit() {
         char unit;
 
-        string prompts[3] = {
-            "2. Pick the unit that your temperature IS IN (F/C/K): ",
-            "3. Pick the unit that you want to convert TO (F/C/K): "};
-
         while (true) {
-            cout << prompts[questionIndex];
+            cout << "2. Pick the unit that your temperature IS IN [F/C/K]: ";
             cin >> unit;
 
             if (!_isValidUnit(unit)) {
-                cout << "Please input a valid unit (F/C/K).\n";
+                cout << "Please input a valid unit [F/C/K].\n";
                 continue;
             }
 
+            unit = toupper(unit);
+            return unit;
+        }
+    }
+
+    char _takeConvertedUnit() {
+        char unit;
+
+        while (true) {
+            cout << "3. Pick the unit that you want to convert TO [F/C/K]: ";
+            cin >> unit;
+
+            if (!_isValidUnit(unit)) {
+                cout << "Please input a valid unit [F/C/K].\n";
+                continue;
+            }
+
+            unit = toupper(unit);
             return unit;
         }
     }
 
     bool _isValidUnit(char input) {
-        char validUnits[3] = {'F', 'C', 'K'};
+        char validUnits[6] = {'F', 'C', 'K', 'f', 'c', 'k'};
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             if (input == validUnits[i]) {
                 return true;
             }
@@ -56,8 +82,36 @@ class Temperature {
         return false;
     }
 
-    /* Conversions */
-    double fahrenheitToCelsius(double temp) { return ((temp - 32) / 1.8); }
+    double _solve(double temp, char initialUnit, char convertedUnit) {
+        bool fahrenheitToCelsius = (initialUnit == 'F' && convertedUnit == 'C');
+        bool fahrenheitToKelvin = (initialUnit == 'F' && convertedUnit == 'K');
+        bool celsiusToFahrenheit = (initialUnit == 'C' && convertedUnit == 'F');
+        bool celsiusToKelvin = (initialUnit == 'C' && convertedUnit == 'K');
+        bool kelvinToFahrenheit = (initialUnit == 'K' && convertedUnit == 'F');
+        bool kelvinToCelsius = (initialUnit == 'K' && convertedUnit == 'C');
+
+        // if they, for some reason, picked the same unit to convert to
+        if (initialUnit == convertedUnit) {
+            cout << "You do realize that you converted it to the same unit "
+                    "right?\n";
+            return temp;
+        } else if (fahrenheitToCelsius) {
+            return ((temp - 32) / 1.8);             // F -> C
+        } else if (fahrenheitToKelvin) {
+            return ((temp - 32) / 1.8) + 273.15;    // F -> K
+        } else if (celsiusToFahrenheit) {
+            return (temp * 1.8) + 32;               // C -> F
+        } else if (celsiusToKelvin) {
+            return temp + 273.15;                   // C -> K
+        } else if (kelvinToFahrenheit) {
+            return ((temp - 273.15) * 1.8) + 32;    // K -> F
+        } else if (kelvinToCelsius) {
+            return temp - 273.15;                   // K -> C
+        } else {
+            cout << "How tf did you get here???\n";
+            return -1;
+        }
+    }
 };
 
 int main() {
